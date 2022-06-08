@@ -1,14 +1,15 @@
 import requests, codecs
 from bs4 import BeautifulSoup as BS
 
+__all__ = ('headhunter_find_vacancies', 'habr_find_vacancies')
+
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/39.0.2171.95 Safari/537.36'}
 
 
-def headhunter_find_vacancies(url, headers):
+def headhunter_find_vacancies(url):
     jobs = []
     errors = []
-    url = 'https://hh.ru/search/vacancy?text=&professional_role=96&salary=&currency_code=RUR&experience=doesNotMatter&order_by=relevance&search_period=0&items_on_page=20&no_magic=true&L_save_area=true'
     resp = requests.get(url, headers=headers)
     try:
         if resp.status_code == 200:
@@ -20,6 +21,7 @@ def headhunter_find_vacancies(url, headers):
                 for div in div_list:
                     title = div.find('a', attrs={'data-qa': 'vacancy-serp__vacancy-title'})
                     job_link = title['href']
+                    title = title.text
 
                     if div.find('div', attrs={'data-qa': 'vacancy-serp__vacancy_snippet_responsibility'}):
                         responsibility = div.find('div',
@@ -35,11 +37,13 @@ def headhunter_find_vacancies(url, headers):
 
                     desc = responsibility + ' ' + requirement
                     company = div.find('a', attrs={'data-qa': 'vacancy-serp__vacancy-employer'}).text
+                    city = div.find('div', attrs={'data-qa': 'vacancy-serp__vacancy-address'}).text
                     jobs.append({
                         'title': title,
                         'url': job_link,
                         'description': desc,
-                        'company': company
+                        'company': company,
+                        'city': city
                     })
             else:
                 errors.append({'url': url, 'title': 'Main div not found'})
@@ -53,7 +57,7 @@ def headhunter_find_vacancies(url, headers):
     return jobs, errors
 
 
-def habr_find_vacancies(url, headers):
+def habr_find_vacancies(url):
     jobs = []
     errors = []
     resp = requests.get(url, headers=headers)
@@ -79,11 +83,18 @@ def habr_find_vacancies(url, headers):
 
                     desc = skills
                     company = div.find('div', attrs={'class': 'vacancy-card__company-title'}).a.text
+
+                    if div.find('div', attrs={'class': 'vacancy-card__meta'}).a:
+                        city = div.find('div', attrs={'class': 'vacancy-card__meta'}).a.text
+                    else:
+                        city = 'Город не указан'
+
                     jobs.append({
                         'title': title,
                         'url': job_link,
                         'description': desc,
-                        'company': company
+                        'company': company,
+                        'city': city
                     })
             else:
                 errors.append({'url': url, 'title': 'Main div not found'})
@@ -98,8 +109,9 @@ def habr_find_vacancies(url, headers):
 
 
 if __name__ == '__main__':
-    url = 'https://career.habr.com/vacancies?skills[]=446&type=all'
-    habr_jobs, habr_errors = habr_find_vacancies(url, headers)
+    url = 'https://career.habr.com/vacancies?page=1&skills[]=446&sort=date&type=all'
+    habr_jobs, habr_errors = habr_find_vacancies(url)
     handler = codecs.open('habr.txt', 'w', 'utf-8')
     handler.write(str(habr_jobs))
     handler.close()
+    a = 0
