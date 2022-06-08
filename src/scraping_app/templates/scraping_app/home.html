@@ -24,24 +24,7 @@
 {% endblock %}
 
 {% block content %}
-    {% for obj in object_list %}
-            <div class="">
-                <div class="card my-3">
-                <h5 class="card-header">{{ obj.title }}</h5>
-                  <div class="card-body">
-                    <h6 class="" id="language#{{ obj.id }}">{{ obj.language }} | </h6>
-                    <h6 class="" id="city#{{ obj.id }}">{{ obj.city.name }} | </h6>
-                    <h6 class="" id="timestamp#{{ obj.id }}">{{ obj.timestamp }}</h6>
-                    <p class="card-text">{{ obj.description }}</p>
-                    <a href="{{ obj.url }}" class="btn btn-primary">Перейти на сайт с вакансией</a>
-                  </div>
-                </div>
-            </div>
-        {% empty %}
-        <div class="block">Sorry, but vacancy aren't available</div>
-    {% endfor %}
-
-        <div class="container">
+    <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <form action="" method="get" class="form">
@@ -52,7 +35,34 @@
                     </form>
                 </div>
             </div>
-
     </div>
+
+    {% for obj in object_list %}
+            <div class="">
+                <div class="card my-3">
+                <h5 class="card-header">{{ obj.title }}</h5>
+                  <div class="card-body">
+                    <h6 class="" id="language#{{ obj.id }}">{{ obj.language }} | </h6>
+                    <h6 class="" id="city#{{ obj.id }}">{{ obj.city.name }} | </h6>
+                    <h6 class="" id="timestamp#{{ obj.id }}">{{ obj.timestamp }}</h6>
+                    <h6 class="" id="company#{{ obj.id }}">{{ obj.company }}</h6>
+                    <p class="card-text">{{ obj.description }}</p>
+                    <a href="{{ obj.url }}" class="btn btn-primary">Перейти на сайт с вакансией</a>
+                  </div>
+                </div>
+            </div>
+        {% empty %}
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <h4>
+                        К сожалению, по Вашему запросу ничего не найдено.
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
 {% endblock %}
 
