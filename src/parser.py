@@ -68,6 +68,7 @@ def habr_find_vacancies(url, headers):
                 for div in div_list:
                     title = div.find('a', attrs={'class': 'vacancy-card__title-link'})
                     job_link = domain + title['href']
+                    title = title.text
 
                     if div.find('div', attrs={'class': 'vacancy-card__skills'}):
                         skills = div.find('div',
