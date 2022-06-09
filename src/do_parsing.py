@@ -65,22 +65,18 @@ for job in jobs:
     else:
         city = City.objects.filter(name=job['city']).first()
 
-    if len(Language.objects.filter(name='python')) == 0:
-        lang = Language(name='Python', slug=transform_to_eng('Python'))
-        lang.save()
-        language = Language.objects.filter(slug='python').first()
+    if len(Vacancy.objects.filter(url=job['url'])) == 0:
+        v = Vacancy(
+            url=job['url'],
+            title=job['title'],
+            company=job['company'],
+            description=job['description'],
+            city=city,
+            language=Language.objects.filter(id=job['language_id']).first()
+        )
+        v.save()
     else:
-        language = Language.objects.filter(slug='python').first()
-
-    v = Vacancy(
-        url=job['url'],
-        title=job['title'],
-        company=job['company'],
-        description=job['description'],
-        city=city,
-        language=language
-    )
-    v.save()
+        pass
 
 if errors:
     er = Error(data=errors).save()
