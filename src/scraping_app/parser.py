@@ -7,7 +7,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleW
                          'Chrome/39.0.2171.95 Safari/537.36'}
 
 
-def headhunter_find_vacancies(url):
+def headhunter_find_vacancies(url, language=None):
     jobs = []
     errors = []
     resp = requests.get(url, headers=headers)
@@ -43,7 +43,8 @@ def headhunter_find_vacancies(url):
                         'url': job_link,
                         'description': desc,
                         'company': company,
-                        'city': city
+                        'city': city,
+                        'language_id': language
                     })
             else:
                 errors.append({'url': url, 'title': 'Main div not found'})
@@ -57,7 +58,7 @@ def headhunter_find_vacancies(url):
     return jobs, errors
 
 
-def habr_find_vacancies(url):
+def habr_find_vacancies(url, language=None):
     jobs = []
     errors = []
     resp = requests.get(url, headers=headers)
@@ -94,7 +95,8 @@ def habr_find_vacancies(url):
                         'url': job_link,
                         'description': desc,
                         'company': company,
-                        'city': city
+                        'city': city,
+                        'language_id': language
                     })
             else:
                 errors.append({'url': url, 'title': 'Main div not found'})
@@ -108,10 +110,9 @@ def habr_find_vacancies(url):
     return jobs, errors
 
 
-if __name__ == '__main__':
-    url = 'https://career.habr.com/vacancies?page=1&skills[]=446&sort=date&type=all'
-    habr_jobs, habr_errors = habr_find_vacancies(url)
-    handler = codecs.open('habr.txt', 'w', 'utf-8')
-    handler.write(str(habr_jobs))
-    handler.close()
-    a = 0
+# if __name__ == '__main__':
+#     url = 'https://career.habr.com/vacancies?page=1&skills[]=446&sort=date&type=all'
+#     habr_jobs, habr_errors = habr_find_vacancies(url)
+#     handler = codecs.open('habr.txt', 'w', 'utf-8')
+#     handler.write(str(habr_jobs))
+#     handler.close()

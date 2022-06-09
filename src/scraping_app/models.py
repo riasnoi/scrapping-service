@@ -1,5 +1,10 @@
 from django.db import models
 from .text_transform import transform_to_eng
+import jsonfield
+
+
+def default_urls():
+    return {'hh': '', 'habr': ''}
 
 
 class City(models.Model):
@@ -51,3 +56,25 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Error(models.Model):
+    timestamp = models.DateField(auto_now_add=True, verbose_name='Дата ошибки')
+    data = jsonfield.JSONField()
+
+    class Meta:
+        verbose_name = 'Ошибку'
+        verbose_name_plural = 'Ошибки'
+
+
+class UrlToParse(models.Model):
+    language = models.OneToOneField('Language', on_delete=models.CASCADE, verbose_name='Язык программирования',
+                                    unique=True)
+    data = jsonfield.JSONField(default=default_urls())
+
+    class Meta:
+        verbose_name = 'Адрес для парсера'
+        verbose_name_plural = 'Адреса для парсера'
+
+    def __str__(self):
+        return self.language.name
