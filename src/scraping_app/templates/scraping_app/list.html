@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Вакансии {% endblock %}
+
+{% block content %}
+    <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <form action="" method="get" class="form">
+                        <div class="form-group">
+                            {{ form.as_p }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-vacancy-search"> Найти </button>
+                    </form>
+                </div>
+            </div>
+    </div>
+
+    {% for obj in object_list %}
+            <div class="flex-vacancy-card-wrapper">
+                <div class="flex-vacancy-card">
+                <h5 class="card-header">{{ obj.title }}</h5>
+                  <div class="card-body">
+                    <h6 class="" id="language#{{ obj.id }}">{{ obj.language }} | </h6>
+                    <h6 class="" id="city#{{ obj.id }}"> {{ obj.city.name }} | </h6>
+                    <h6 class="" id="timestamp#{{ obj.id }}"> {{ obj.timestamp }} | </h6>
+                    <h6 class="" id="company#{{ obj.id }}"> {{ obj.company }}</h6>
+                  </div>
+
+                    <p class="card-text">{{ obj.description }}</p>
+                    <a href="{{ obj.url }}" class="btn btn-primary">Перейти на сайт с вакансией</a>
+                </div>
+            </div>
+        {% empty %}
+        <div class="container">
+            <style>
+                .col-md-6.mx-auto h4{
+                  text-align: center;
+                }
+            </style>
+            <br>
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <h4>
+                        К сожалению, ничего не найдено. <br>
+                        Выберите город и (или) специализацию из списка выше.
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div class="row paginator-row">
+        <div class="col">
+
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+                {% if object_list.has_previous %}
+              <a class="page-link" href="vacancy?city={{ city }}&language={{ language }}&page={{ object_list.previous_page_number }} aria-label="Предыдущая">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+                {% endif %}
+            </li>
+          {% for page in object_list.paginator.page_range %}
+            <li class="page-item {% if page == object_list.number %} active {% endif %}"><a class="page-link" href="vacancy?city={{ city }}&language={{ language }}&page={{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          {% if object_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="vacancy?city={{ city }}&language={{ language }}&page={{ object_list.next_page_number }}" aria-label="Следующая">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          </ul>
+        </nav>
+        </div>
+    </div>
+{% endblock %}
+
+
+
