@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Успешная регистрация {% endblock %}
+
+{% block content %}
+<div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto register-complete">
+                    <h3>Поздравляем с успешной регистрацией, {{ new_user.email }}! <br>
+                    Теперь вы можете войти на <a href="{% url 'accounts:login_view' %}">этой странице</a>.</h3>
+                </div>
+            </div>
+    </div>
+{% endblock %}

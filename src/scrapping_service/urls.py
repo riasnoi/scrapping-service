@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from scraping_app.views import main_view, list_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('vacancy/', list_view, name='list'),
+    path('accounts/', include(('accounts.urls', 'accounts'))),
     path('', main_view, name='main')
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)

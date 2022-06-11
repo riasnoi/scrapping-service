@@ -2,6 +2,19 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
+    max-width: 100%;
+}
+
+img {
+    max-width: 100%;
+}
+
+svg {
+    max-width: 100%;
+}
+
+body {
+    max-width: 100%
 }
 
 .nav-link {
@@ -20,12 +33,12 @@ a {
 }
 
 .main {
-    position: relative;
+    min-height: 100vh;
 }
 
 .people {
     position: fixed;
-    margin-right: 15vw;
+    max-width: 100%;
     margin-bottom: 5vh;
     z-index: -99;
 }
@@ -281,6 +294,7 @@ p {
     flex-direction: column;
     background-color: #130C3A;
     height: fit-content;
+    padding-top: 5vh;
     width: 100vw;
     color: #fff;
 }
@@ -310,10 +324,11 @@ p {
     background-color: transparent;
 }
 
-.input-group>button {
+.input-group>a {
     background: #0555FF;
     color: #fff;
     border-radius: 0px 10px 10px 0px;
+    padding-top: 1.7vh;
 }
 
 .footer-nav-area {
@@ -396,6 +411,7 @@ p {
 
 .btn-vacancy-search {
     margin-top: 2vh;
+    margin-bottom: 3vh;
 }
 
 .pagination {
@@ -415,4 +431,15 @@ p {
 col>nav {
     display: flex;
     justify-content: center;
+}
+
+.form-group {
+    margin-top: 10vh;
+    margin-bottom: 2vh;
+}
+
+.register-complete {
+    display: flex;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
 }

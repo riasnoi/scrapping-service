@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Связь с нами {% endblock %}
+
+{% block content %}
+<div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <form action="" method="post" class="form"> {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.as_p }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-vacancy-search"> Отправить </button>
+                    </form>
+
+                </div>
+            </div>
+    </div>
+{% endblock %}
