@@ -12,8 +12,8 @@
 📦 **Установка и запуск**  
 ```bash
 git clone https://github.com/riasnoi/scrapping-service.git  
-cd scrapping-service 
-pip install -r requirements.txt  
+cd scrapping-service/src 
+pip install django
 python manage.py migrate  
 python manage.py runserver  
 ```
